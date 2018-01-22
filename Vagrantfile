@@ -35,16 +35,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                 rclient1.vm.network "private_network", ip: "#{RANCH_SUBNET}.101"
                 rclient1.vm.hostname = "#{RCLIENT1}"
                 config.vm.provision "docker" do |d|
-                d.run "nginx",
-        end
+                d.run "nginx"
         end
 
         config.vm.define "rclient2" do |rclient2|
                 rclient2.vm.box = "ubuntu/trusty64"
                 rclient2.vm.network "private_network", ip: "#{RANCH_SUBNET}.102"
                 rclient2.vm.hostname = "#{RCLIENT2}"
-                config.vm.provision "docker" do |d|
-                d.run "nginx"
+                config.vm.provision "docker",
+                  images: ["ubuntu"]
         end
         end
 end
