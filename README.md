@@ -14,12 +14,7 @@ Clone or copy the repo and do the following:
     $ cd /path/to/repo
     $ vagrant up
 
-Inspecting the servers & running the applications
-
-    $ vagrant status
-    $ vagrant ssh reserver or Browse to http://ranch-svr.infracloud.io:8080"
-    $ vagrant ssh rclient1
-    $ vagrant ssh rclient2
+    $ Browse to http://rserver.skynet.io:8080"
     
 ## Clearing the enviroment
 
