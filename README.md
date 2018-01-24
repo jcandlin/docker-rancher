@@ -6,6 +6,7 @@ In order to use this repository you need the following:
 
 - [VirtualBox](https://www.virtualbox.org/)
 - [Vagrant](http://www.vagrantup.com/)
+- [Vagrant Host Manager](https://github.com/devopsgroup-io/vagrant-hostmanager)
 
 ## Using Vagrant Rancher Environment
 
@@ -13,6 +14,10 @@ Clone or copy the repo and do the following:
 
     $ cd /path/to/repo
     $ vagrant up
+
+Update VM hostfiles with entries for each other:
+
+    $ vagrant hostmanager
     
 ## To access the Rancher GUI
 
