@@ -28,6 +28,11 @@ Update VM /etc/hosts files with entries for each other:
     $ vagrant ssh rclient1 - rclient1.skynet.io
     $ vagrant ssh rclient2 - rclient2.skynet.io
     
+
+## Notes
+
+    $ when setting up Rancher server through the GUI use <IP>:8080
+    
 ## Clearing the environment
 
     $ vagrant destroy
