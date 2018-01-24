@@ -15,7 +15,7 @@ Clone or copy the repo and do the following:
     $ cd /path/to/repo
     $ vagrant up
 
-Update VM hostfiles with entries for each other:
+Update VM /etc/hosts files with entries for each other:
 
     $ vagrant hostmanager
     
