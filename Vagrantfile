@@ -13,7 +13,8 @@ RANCH_SUBNET="172.19.8"
 
 
 RSERVER_DOMAIN_NAME="rserver.skynet.io"
-RCLIENT1="rclient1.skynet.io"
+CB="couchbase.skynet.io"
+CADVISOR="cadvisor.skynet.io"
 RCLIENT2="rclient2.skynet.io"
 
 
@@ -30,21 +31,36 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                 rserver.vm.provision "shell", inline: "sudo docker run -d --restart=always -p 8080:8080 rancher/server"
         end
 
-        config.vm.define "rclient1" do |rclient1|
-                rclient1.vm.box = "ubuntu/trusty64"
-                rclient1.vm.network "private_network", ip: "#{RANCH_SUBNET}.101"
-                rclient1.vm.hostname = "#{RCLIENT1}"
-                config.vm.provision "docker" do |d|
-                d.run "nginx"
+        config.vm.define "couchbase" do |couchbase|
+                couchbase.vm.box = "ubuntu/trusty64"
+                couchbase.vm.network "private_network", ip: "#{RANCH_SUBNET}.101"
+                couchbase.vm.hostname = "#{CB}"
+                couchbase.vm.provider :virtualbox do |vba|
+                        vba.customize ["modifyvm", :id, "--memory", MASTER_MEMORY]
+                end
+                couchbase.vm.provision "shell", inline: "wget -qO- https://get.docker.com/ | sh"
+                couchbase.vm.provision "shell", inline: "docker run -d -p 8091-8093:8091-8093 -p 11210:11210 --name couchbase arungupta/couchbase"
+                
         end
+
+        config.vm.define "cadvisor" do |cadvisor|
+                cadvisor.vm.box = "ubuntu/trusty64"
+                cadvisor.vm.network "private_network", ip: "#{RANCH_SUBNET}.102"
+                cadvisor.vm.hostname = "#{CADVISOR}"
+                cadvisor.vm.provider :virtualbox do |vba|
+                        vba.customize ["modifyvm", :id, "--memory", MASTER_MEMORY]
+                end
+                cadvisor.vm.provision "shell", inline: "wget -qO- https://get.docker.com/ | sh"
         end
 
         config.vm.define "rclient2" do |rclient2|
                 rclient2.vm.box = "ubuntu/trusty64"
-                rclient2.vm.network "private_network", ip: "#{RANCH_SUBNET}.102"
+                rclient2.vm.network "private_network", ip: "#{RANCH_SUBNET}.103"
                 rclient2.vm.hostname = "#{RCLIENT2}"
-                config.vm.provision "docker" do |d|
-                d.run "nginx"
-        end
+                rclient2.vm.provider :virtualbox do |vba|
+                        vba.customize ["modifyvm", :id, "--memory", MASTER_MEMORY]
+                end
+                rclient2.vm.provision "shell", inline: "wget -qO- https://get.docker.com/ | sh"
+
         end
 end
